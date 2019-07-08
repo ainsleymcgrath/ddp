@@ -12,9 +12,6 @@
   );
 
   function onMouseDown(event) {
-    circle.style.position = "absolute";
-    circle.style.zIndex = 1000;
-
     circle.addEventListener("mousemove", onMouseMove);
   }
 

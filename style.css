@@ -17,5 +17,6 @@ div#circle {
   background: steelblue;
   border-radius: 100px;
   position: absolute;
+  z-index: 1000;
   transition: width 0.5s, height 0.5s;
 }
