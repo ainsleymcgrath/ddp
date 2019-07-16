@@ -1,0 +1,24 @@
+{
+  "name": "oratorial",
+  "version": "1.0.0",
+  "description": "some colors can talk",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ainsleymcgrath/oratorial.git"
+  },
+  "author": "Ainsley McGrath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ainsleymcgrath/oratorial/issues"
+  },
+  "homepage": "https://github.com/ainsleymcgrath/oratorial#readme",
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "live-server": "^1.2.1",
+    "prettier": "^1.18.2"
+  }
+}
