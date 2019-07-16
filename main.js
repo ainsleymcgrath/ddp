@@ -1,8 +1,15 @@
-import { onMouseDown, onMouseUp, onDragStart } from "./modules/eventHandlers.js";
+import {
+  onMouseDown,
+  onMouseUp,
+  onDragStart,
+} from "./modules/eventHandlers.js";
 
 (() => {
   const circle = document.getElementById("circle");
   const root = document.getElementById("root");
+
+  circle.style.backgroundColor = "lightsteelblue";
+  root.style.backgroundColor = "snow";
 
   [
     ["mousedown", onMouseDown],
@@ -11,5 +18,4 @@ import { onMouseDown, onMouseUp, onDragStart } from "./modules/eventHandlers.js"
   ].forEach(([listener, callback]) =>
     circle.addEventListener(listener, callback, false),
   );
-
 })();

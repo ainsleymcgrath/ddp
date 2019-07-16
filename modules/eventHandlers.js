@@ -1,4 +1,5 @@
-import { twoNewColors } from "./colorScheming.js";
+import { twoNewColors } from "./util.js";
+import COLORS from "./COLORS.js";
 
 const circle = document.getElementById("circle");
 const root = document.getElementById("root");
@@ -20,7 +21,11 @@ export function onMouseUp(event) {
   circle.removeEventListener("mousemove", onMouseMove);
   circle.onmouseup = null;
 
-  const [fg, bg] = twoNewColors(circle.style.background, root.style.background);
+  const [fg, bg] = twoNewColors(
+    COLORS,
+    circle.style.backgroundColor,
+    root.style.backgroundColor,
+  );
 
   circle.style.background = fg;
   root.style.background = bg;
@@ -29,4 +34,3 @@ export function onMouseUp(event) {
 export function onDragStart(event) {
   return false;
 }
-
