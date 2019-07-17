@@ -10,8 +10,6 @@ const CONTRAST_COEFFICIENT = 0.05;
 const MINIMUM_ACCESSIBLE_CONTRAST = 4.5;
 
 export function twoNewColors(namedColorsObject, ...oldColors) {
-  const [oldFg, oldBg] = oldColors;
-
   const colorDataByName = Object.keys(namedColorsObject).reduce(
     (acc, cur) => ({ ...acc, ...namedColorsObject[cur] }),
     {},
@@ -20,8 +18,11 @@ export function twoNewColors(namedColorsObject, ...oldColors) {
   let isAccessibleColorScheme = false;
   let newFg, newBg;
 
-  while (!isAccessibleColorScheme) {
-    [newFg, newBg] = shuffle(Object.keys(colorDataByName));
+  while (
+    !isAccessibleColorScheme &&
+    [newFg, newBg].some(color => !oldColors.includes(color))
+  ) {
+    [newFg, newBg] = randomPair(Object.keys(colorDataByName));
 
     const [fgLuminance, bgLuminance] = [
       colorDataByName[newFg].rgb,
@@ -35,22 +36,15 @@ export function twoNewColors(namedColorsObject, ...oldColors) {
   return [newFg, newBg].sort();
 }
 
-function shuffle(array) {
-  let currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
+function randomPair(array) {
+  let randomIdx1 = Math.floor(Math.random() * array.length);
+  let randomIdx2 = Math.floor(Math.random() * array.length);
 
-  while (0 !== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // swap
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+  while (randomIdx1 === randomIdx2) {
+    randomIdx2 = Math.floor(Math.random() * array.length);
   }
 
-  return array;
+  return [array[randomIdx1], array[randomIdx2]];
 }
 
 function luminance(rgbString) {
