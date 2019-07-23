@@ -19,8 +19,8 @@ export function twoNewColors(namedColorsObject, ...oldColors) {
   let newFg, newBg;
 
   while (
-    !isAccessibleColorScheme &&
-    [newFg, newBg].some(color => !oldColors.includes(color))
+    !isAccessibleColorScheme ||
+    oldColors.some(color => [newFg, newBg].includes(color))
   ) {
     [newFg, newBg] = randomPair(Object.keys(colorDataByName));
 
