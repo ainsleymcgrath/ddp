@@ -4,7 +4,7 @@ import COLORS from "./COLORS.js";
 const circle = document.getElementById("circle");
 const root = document.getElementById("root");
 
-export function onMouseDown(event) {
+export function onMouseDown() {
   circle.addEventListener("mousemove", onMouseMove);
 }
 
@@ -17,7 +17,7 @@ function onMouseMove(event) {
   moveTo(event.pageX, event.pageY);
 }
 
-export function onMouseUp(event) {
+export function onMouseUp() {
   circle.removeEventListener("mousemove", onMouseMove);
   circle.onmouseup = null;
 
@@ -31,6 +31,6 @@ export function onMouseUp(event) {
   root.style.background = bg;
 }
 
-export function onDragStart(event) {
+export function onDragStart() {
   return false;
 }
