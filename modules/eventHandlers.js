@@ -1,36 +1,31 @@
-import { twoNewColors } from "./util.js";
+import { twoNewColors, setElementColor } from "./util.js";
 import COLORS from "./COLORS.js";
 
-const circle = document.getElementById("circle");
-const root = document.getElementById("root");
-
-export function onMouseDown() {
-  circle.addEventListener("mousemove", onMouseMove);
-}
-
-function onMouseMove(event) {
-  const moveTo = (pageX, pageY) => {
-    circle.style.left = pageX - circle.offsetWidth / 2 + "px";
-    circle.style.top = pageY - circle.offsetHeight / 2 + "px";
-  };
-
-  moveTo(event.pageX, event.pageY);
-}
+const elementsToColor = document.querySelectorAll(".fg, .bg");
+let currentBg, currentFg;
 
 export function onMouseUp() {
-  circle.removeEventListener("mousemove", onMouseMove);
-  circle.onmouseup = null;
+  for (let element of elementsToColor.values()) {
+    if (currentBg && currentFg) {
+      break;
+    }
 
-  const [fg, bg] = twoNewColors(
-    COLORS,
-    circle.style.backgroundColor,
-    root.style.backgroundColor,
-  );
+    if (element.tagName === "SECTION") {
+      currentFg =
+        element.className === "fg"
+          ? element.backgroundColor
+          : currentFg || false; // avoid overrwriting this if already set
+      currentBg =
+        element.className === "bg"
+          ? element.backgroundColor
+          : currentBg || false;
+    }
+  }
+  const [fg, bg] = twoNewColors(COLORS, currentFg, currentBg);
 
-  circle.style.background = fg;
-  root.style.background = bg;
-}
+  elementsToColor.forEach(el => setElementColor(el, fg, bg));
 
-export function onDragStart() {
-  return false;
+  document
+    .querySelectorAll("span")
+    .forEach(el => (el.innerText = el.style.color));
 }

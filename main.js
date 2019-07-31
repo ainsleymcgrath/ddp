@@ -1,19 +1,19 @@
-import {
-  onMouseDown,
-  onMouseUp,
-  onDragStart,
-} from "./modules/eventHandlers.js";
+import { onMouseUp } from "./modules/eventHandlers.js";
+import { setElementColor } from "./modules/util.js";
 
-const circle = document.getElementById("circle");
-const root = document.getElementById("root");
+const elementsToColor = document.querySelectorAll(".fg, .bg");
 
-circle.style.backgroundColor = "lightsteelblue";
-root.style.backgroundColor = "snow";
+elementsToColor.forEach(el => {
+  setElementColor(el, "steelblue", "snow");
+});
 
-[
-  ["mousedown", onMouseDown],
-  ["mouseup", onMouseUp],
-  ["dragstart", onDragStart],
-].forEach(([listener, callback]) =>
-  circle.addEventListener(listener, callback, false),
+document
+  .querySelectorAll("span")
+  .forEach(el => (el.innerText = el.style.color));
+
+[["mouseup", onMouseUp]].forEach(([listener, callback]) =>
+  elementsToColor.forEach(el => {
+    setElementColor(el, "steelblue", "snow");
+    el.addEventListener(listener, callback, false);
+  }),
 );

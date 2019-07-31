@@ -12,7 +12,7 @@ const MINIMUM_ACCESSIBLE_CONTRAST = 4.5;
 export function twoNewColors(namedColorsObject, ...oldColors) {
   const colorDataByName = Object.keys(namedColorsObject).reduce(
     (acc, cur) => ({ ...acc, ...namedColorsObject[cur] }),
-    {},
+    {}
   );
 
   let isAccessibleColorScheme = false;
@@ -26,7 +26,7 @@ export function twoNewColors(namedColorsObject, ...oldColors) {
 
     const [fgLuminance, bgLuminance] = [
       colorDataByName[newFg].rgb,
-      colorDataByName[newBg].rgb,
+      colorDataByName[newBg].rgb
     ].map(luminance);
 
     isAccessibleColorScheme =
@@ -57,4 +57,23 @@ function contrast(...luminances) {
   const [darker, lighter] = luminances.sort();
 
   return (lighter + CONTRAST_COEFFICIENT) / (darker + CONTRAST_COEFFICIENT);
+}
+
+export function setElementColor(element, fg, bg) {
+  const objectWithSameValueForKeys = (keys, value) =>
+    keys.reduce((acc, cur) => ({ [cur]: value, ...acc }), {});
+
+  const colorAttrsByElementType = {
+    ...objectWithSameValueForKeys(
+      ["SPAN", "P", "H1", "H2", "H3", "H4", "H5", "H6", "A", "TITLE"],
+      "color"
+    ),
+    ...objectWithSameValueForKeys(
+      ["DIV", "SECTION", "ARTICLE"],
+      "backgroundColor"
+    )
+  };
+
+  const colorAttribute = colorAttrsByElementType[element.tagName];
+  element.style[colorAttribute] = element.className === "fg" ? fg : bg;
 }
