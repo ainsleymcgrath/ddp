@@ -1,19 +1,24 @@
 import { onMouseUp } from "./modules/eventHandlers.js";
 import { setElementColor } from "./modules/util.js";
 
-const elementsToColor = document.querySelectorAll(".fg, .bg");
+window.Oratorial = {
+  elementsToColor: document.querySelectorAll(".fg, .bg"),
+  extra: undefined,
+  init: function() {
+    // two faves to start off
+    this.elementsToColor.forEach(el => {
+      setElementColor(el, "steelblue", "snow");
+    });
 
-elementsToColor.forEach(el => {
-  setElementColor(el, "steelblue", "snow");
-});
+    document
+      .querySelectorAll("span")
+      .forEach(el => (el.innerText = el.style.color));
 
-document
-  .querySelectorAll("span")
-  .forEach(el => (el.innerText = el.style.color));
-
-[["mouseup", onMouseUp]].forEach(([listener, callback]) =>
-  elementsToColor.forEach(el => {
-    setElementColor(el, "steelblue", "snow");
-    el.addEventListener(listener, callback, false);
-  }),
-);
+    [["mouseup", onMouseUp]].forEach(([listener, callback]) =>
+      this.elementsToColor.forEach(el => {
+        setElementColor(el, "steelblue", "snow");
+        el.addEventListener(listener, callback, false);
+      }),
+    );
+  },
+};
